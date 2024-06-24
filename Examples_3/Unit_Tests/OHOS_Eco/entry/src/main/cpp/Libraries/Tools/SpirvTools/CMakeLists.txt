@@ -1,20 +1,18 @@
+add_library(SpirvTools STATIC "")
+target_sources(SpirvTools PRIVATE
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv.hpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cfg.cpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cfg.hpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_common.hpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cpp.cpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cross.cpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cross.hpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cross_parsed_ir.cpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cross_util.cpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_glsl.cpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_parser.cpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_reflect.cpp"
 
-set(PROJECT_NAME SpirvTools)
-add_library(${PROJECT_NAME} STATIC "")
-target_sources(${PROJECT_NAME} PRIVATE
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv.hpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cfg.cpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cfg.hpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_common.hpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cpp.cpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cross.cpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cross.hpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cross_parsed_ir.cpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_cross_util.cpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_glsl.cpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_parser.cpp"
-    "${FORGEROOT}/Common_3/ThirdParty/OpenSource/SPIRV_Cross/spirv_reflect.cpp"
-
-    "${FORGEROOT}/Common_3/Tools/SpirvTools/SpirvTools.cpp"
-    "${FORGEROOT}/Common_3/Tools/SpirvTools/SpirvTools.h"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/Tools/SpirvTools/SpirvTools.cpp"
+    "${CMAKE_SOURCE_DIR}/../../../../../../../Common_3/Tools/SpirvTools/SpirvTools.h"
 )
