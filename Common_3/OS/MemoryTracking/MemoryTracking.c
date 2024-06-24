@@ -26,7 +26,7 @@
 #include "wchar.h"
 
 
-#if !defined(TARGET_IOS) && !defined(__OHOS__) 
+#if !defined(TARGET_IOS)
 #include "../../ThirdParty/OpenSource/rmem/inc/rmem.h"
 #endif
 
