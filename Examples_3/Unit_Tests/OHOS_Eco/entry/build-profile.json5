@@ -26,11 +26,12 @@
   ],
   "targets": [
     {
-      "name": "default"
+      "name": "debug",
     }
     ,
     {
-    "name": "ohosTest",
+      "name": "release",
     }
+
   ]
 }
