@@ -90,6 +90,26 @@ const char *GetResourceMount(ResourceMount mount)
 bool fsIsBundledResourceDir(ResourceDirectory resourceDir);
 
 static NativeResourceManager *pAssetManager = nullptr;
+void getPlatFormDataFile(napi_env env, napi_callback_info info,const char* &ePath,const char* &iPath,void *&assetManager)
+{
+	size_t argc = 3;
+	napi_value argv[3] = {nullptr};
+	napi_get_cb_info(env, info, &argc, argv, nullptr, nullptr);
+	auto Fn_GetPath = [&](std::string &path, napi_value naValue)
+	{
+		size_t typeLen = 0;
+		napi_get_value_string_utf8(env, naValue, nullptr, 0, &typeLen);
+		path.resize(typeLen);
+		napi_get_value_string_utf8(env, naValue, const_cast<char *>(path.data()), path.size() + 1, &typeLen);
+	};
+	Fn_GetPath(externalDataPath, argv[1]);
+	Fn_GetPath(internalDataPath, argv[2]);
+	pAssetManager = OH_ResourceManager_InitNativeResourceManager(env, argv[0]);
+	assetManager = pAssetManager;
+	ePath = externalDataPath.c_str();
+	iPath = internalDataPath.c_str();
+}
+
 bool initFileSystem(FileSystemInitDesc *pDesc)
 {
 	if (gInitialized)
@@ -103,31 +123,18 @@ bool initFileSystem(FileSystemInitDesc *pDesc)
 	for (uint32_t i = 0; i < RM_COUNT; ++i)
 		gResourceMounts[i] = "";
 
-	typedef struct OHOSPlatFormData
+	struct OHOSPlatFormData
 	{
-		napi_env env;
-		napi_callback_info info;
+		const char* ePath;
+		const char* iPath;
+		void *assetManager;
 	};
 	auto pPlatformData = (OHOSPlatFormData *)pDesc->pPlatformData;
 
-	size_t argc = 3;
-	napi_value argv[3] = {nullptr};
-	napi_get_cb_info(pPlatformData->env, pPlatformData->info, &argc, argv, nullptr, nullptr);
-	auto Fn_GetPath = [&](std::string &path, napi_value naValue)
-	{
-		size_t typeLen = 0;
-		napi_get_value_string_utf8(pPlatformData->env, naValue, nullptr, 0, &typeLen);
-		path.resize(typeLen);
-		napi_get_value_string_utf8(pPlatformData->env, naValue, const_cast<char *>(path.data()), path.size() + 1, &typeLen);
-	};
-	Fn_GetPath(externalDataPath, argv[1]);
-	Fn_GetPath(internalDataPath, argv[2]);
-	pAssetManager = OH_ResourceManager_InitNativeResourceManager(pPlatformData->env, argv[0]);
-
 	gResourceMounts[RM_CONTENT] = "\0";
-	gResourceMounts[RM_DEBUG] = externalDataPath.c_str();
-	gResourceMounts[RM_DOCUMENTS] = internalDataPath.c_str();
-	gResourceMounts[RM_SAVE_0] = externalDataPath.c_str();
+	gResourceMounts[RM_DEBUG] = pPlatformData->ePath;
+	gResourceMounts[RM_DOCUMENTS] = pPlatformData->iPath;
+	gResourceMounts[RM_SAVE_0] = pPlatformData->ePath;
 
 	// Override Resource mounts
 	for (uint32_t i = 0; i < RM_COUNT; ++i)
@@ -167,7 +174,7 @@ bool PlatformOpenFile(ResourceDirectory resourceDir, const char *fileName, FileM
 			LOGF(LogLevel::eERROR, "OH_ResourceManager_OpenRawFile failed");
 			return false;
 		}
-		// èŽ·å–rawfileå¤§å°å¹¶ç”³è¯·å†…å­˜
+		// »ñÈ¡rawfile´óÐ¡²¢ÉêÇëÄÚ´æ
 		long len = OH_ResourceManager_GetRawFileSize(rawFile);
 
 		*pOut = {};
