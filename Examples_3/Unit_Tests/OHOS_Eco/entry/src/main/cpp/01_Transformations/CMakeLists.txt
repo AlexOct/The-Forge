@@ -21,6 +21,7 @@ if(NOT EXISTS "${FSLCompiler}")
 endif()
 set(GPUCfgDIR   "${CMAKE_CURRENT_LIST_DIR}/../../resources/rawfile/GPUCfg")
 set(ShadersVDIR "${CMAKE_CURRENT_LIST_DIR}/../../resources/rawfile/Shaders/VULKAN")
+set(ShadersBDIR "${CMAKE_CURRENT_LIST_DIR}/../../resources/rawfile/Shaders/Binary")
 set(TexturesDIR "${CMAKE_CURRENT_LIST_DIR}/../../resources/rawfile/Textures")
 
 file(MAKE_DIRECTORY ${ShadersVDIR})
@@ -50,6 +51,7 @@ foreach (f ${ShaderFiles})
 				COMMAND "python.exe"
 				    "${FSLCompiler}"
 					-d "${ShadersVDIR}"
+					-b "${ShadersBDIR}"
 					-l "VULKAN"
 					--noAPISubFolder
 					"${f}"
